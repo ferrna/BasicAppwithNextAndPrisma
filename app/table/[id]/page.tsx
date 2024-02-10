@@ -2,7 +2,6 @@
 import React, { FC, Suspense, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { unstable_noStore } from 'next/cache'
-import { data } from 'autoprefixer'
 
 interface UserProps {
   params: { id: string }
@@ -10,10 +9,10 @@ interface UserProps {
 
 interface User {
   id: number
-  name: string
-  email: string
-  isActive?: boolean
-  registerDate?: Date
+  name?: string
+  email?: string
+  emailVerified?: Date
+  image?: string
 }
 
 const UserWrapper: FC<UserProps> = ({ params }) => {
@@ -38,7 +37,6 @@ const UserWrapper: FC<UserProps> = ({ params }) => {
 }
 
 async function User(id: { id: string }) {
-  console.table(id)
   const data: User = await fetch(`http://localhost:3000/api/users/${id.id}`).then((response) => response.json())
   console.log(data)
   return (
@@ -51,9 +49,8 @@ async function User(id: { id: string }) {
           <br />
           <span>{data.email}</span>
           <br />
-          <span>Active: {data.isActive ? 'Yes' : 'No'}</span>
+          <span>Email Verified: {data.emailVerified?.toString() || ''}</span>
           <br />
-          <span>Register Date: {data.registerDate?.toString() || ''}</span>
         </div>
       )}
     </div>
@@ -64,8 +61,7 @@ const EditUser = (id: { id: string }) => {
     id: 0,
     name: '',
     email: '',
-    isActive: true,
-    registerDate: new Date(),
+    emailVerified: new Date(),
   })
   useEffect(() => {
     fetch(`http://localhost:3000/api/users/${id.id}`)
@@ -88,21 +84,20 @@ const EditUser = (id: { id: string }) => {
             value={dataState.email}
             onChange={(e) => setDataState({ ...dataState, [e.target.name]: e.target.value })}
           />
-          <span>{'Active: '}</span>
-          <input
-            name="isActive"
+          <span>{'Email Verified: '}</span>
+          {/* <input
+            name="emailVerified"
             type="checkbox"
-            checked={dataState.isActive}
+            checked={dataState.emailVerified}
             onClick={(e) => {
-              console.log('era')
-              setDataState({ ...dataState, isActive: !dataState.isActive })
+              setDataState({ ...dataState, emailVerified: !dataState.emailVerified })
             }}
-          />
+          /> */}
           <br />
           <input
-            name="registerDate"
+            name="emailVerified"
             type="date"
-            value={new Date(dataState.registerDate?.toString().slice(0, 10) || '')
+            value={new Date(dataState.emailVerified?.toString().slice(0, 10) || new Date())
               .toISOString()
               .substring(0, 10)}
             onChange={(e) => setDataState({ ...dataState, [e.target.name]: e.target.value })}

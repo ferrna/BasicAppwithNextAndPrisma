@@ -7,7 +7,7 @@ export async function GET(request: NextRequest, params: any) {
   unstable_noStore()
 
   try {
-    const user = await prisma.user.findUnique({ where: { id: parseInt(params.params.id) } })
+    const user = await prisma.user.findUnique({ where: { id: params.params.id } })
     if (!user) return Response.json({ msg: 'could not find user' }, { status: 404 })
     return Response.json(user)
   } catch (error) {
@@ -21,17 +21,18 @@ export async function PUT(request: NextRequest, params: any) {
   const body = await request.json()
   try {
     console.log('0')
-    const user = await prisma.user.findUnique({ where: { id: parseInt(params.params.id) } })
+    const user = await prisma.user.findUnique({ where: { id: params.params.id } })
     console.log('1')
     if (!user) return Response.json({ msg: 'could not find user' }, { status: 404 })
     console.log('2')
+    console.log(body)
     const editedUser = await prisma.user.update({
       where: { id: user.id },
       data: {
         name: body.name,
         email: body.email,
-        registerDate: body.registerDate || user.registerDate,
-        isActive: body.isActive ?? user.isActive,
+        emailVerified: body.emailVerified ?? user.emailVerified,
+        image: body.image || user.image || null,
       },
     })
     console.log('3')
@@ -45,7 +46,7 @@ export async function DELETE(request: NextRequest, params: any) {
   unstable_noStore()
 
   try {
-    const user = await prisma.user.findUnique({ where: { id: parseInt(params.params.id) } })
+    const user = await prisma.user.findUnique({ where: { id: params.params.id } })
 
     if (!user) return Response.json({ msg: 'could not find user' }, { status: 404 })
 

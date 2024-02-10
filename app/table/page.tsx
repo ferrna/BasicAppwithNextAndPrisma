@@ -5,10 +5,11 @@ import { useRouter } from 'next/navigation'
 interface TableProps {}
 interface User {
   id: number
-  name: string
-  email: string
-  isActive?: boolean
-  registerDate?: Date
+  name?: string
+  email?: string
+  emailVerified?: Date
+  image?: string
+  //registerDate?: Date
 }
 
 const TableWrapper: FC<TableProps> = ({}) => {
@@ -35,8 +36,8 @@ async function Table() {
           <th>ID</th>
           <th>Name</th>
           <th>Email</th>
-          <th>Active</th>
-          <th>Register Date</th>
+          <th>Email Verified</th>
+          <th>Verified Date</th>
         </tr>
       </thead>
       <tbody>
@@ -47,8 +48,7 @@ async function Table() {
               <th>{e.id}</th>
               <td>{e.name}</td>
               <td>{e.email}</td>
-              <td>{e.isActive ? 'Yes' : 'No'}</td>
-              <td>{e.registerDate?.toString() || ''}</td>
+              <td>{e.emailVerified?.toString() || ''}</td>
               <td>
                 <button
                   className="btn btn-primary mx-2"

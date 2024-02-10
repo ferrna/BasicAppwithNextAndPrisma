@@ -28,8 +28,8 @@ export async function POST(request: NextRequest) {
       data: {
         name: body.name,
         email: body.email,
-        registerDate: body.registerDate || new Date(),
-        isActive: body.isActive ?? true,
+        emailVerified: body.emailVerified ?? false,
+        image: body.image || null,
       },
     })
     return Response.json(createdUser, { status: 200 })
