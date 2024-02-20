@@ -18,8 +18,8 @@ export const authOptions: NextAuthOptions = {
       name: 'User Account',
       // You can specify which fields should be submitted, by adding keys to the `credentials` object.
       credentials: {
-        username: { label: 'Username', type: 'text', placeholder: 'jsmith' },
-        password: { label: 'Password', type: 'password' },
+        username: { label: 'Username', type: 'text', placeholder: 'jsmith@test.com' },
+        password: { label: 'Password', type: 'password', placeholder: 'jsmith12' },
       },
       async authorize(credentials, req) {
         if (credentials?.username && credentials?.password) {
