@@ -20,7 +20,6 @@ export async function PUT(request: NextRequest, params: any) {
 
   const body = await request.json()
   try {
-    console.log('0')
     const user = await prisma.user.findUnique({ where: { id: params.params.id } })
     console.log('1')
     if (!user) return Response.json({ msg: 'could not find user' }, { status: 404 })

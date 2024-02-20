@@ -11,13 +11,23 @@ const HomeNav = ({}) => {
     <div>
       {status === 'authenticated' ? (
         <div>
-          <div>{session.user?.name}</div>
-          <button className="btn">
+          <div className="avatar online">
+            <div className="w-24 mask mask-hexagon">
+              <img src={session.user?.image || ''} />
+            </div>
+          </div>{' '}
+          <br />
+          <button className="btn btn-secondary mr-3">
+            <Link href="/table">Table</Link>
+          </button>
+          <button className="btn btn-secondary mr-3">
             <Link href="/api/auth/signout">Sign out</Link>
           </button>
         </div>
       ) : (
-        <Link href="/api/auth/signin">Sign in</Link>
+        <button className="btn btn-secondary mr-3">
+          <Link href="/api/auth/signin">Sign in</Link>
+        </button>
       )}
     </div>
   )
