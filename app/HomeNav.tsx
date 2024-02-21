@@ -25,9 +25,14 @@ const HomeNav = ({}) => {
           </button>
         </div>
       ) : (
-        <button className="btn btn-secondary mr-3">
-          <Link href="/api/auth/signin">Sign in</Link>
-        </button>
+        <>
+          <button className="btn btn-secondary mr-3">
+            <Link href="/api/auth/signin">Sign in</Link>
+          </button>
+          <button className="btn btn-primary mr-3">
+            <Link href="/register">Register</Link>
+          </button>
+        </>
       )}
     </div>
   )

@@ -11,6 +11,16 @@ yarn dev
 # or
 pnpm dev
 ```
+```Run build
+npm run build
+```
+
+## Migrations
+Run first
+npx prisma generate
+will generate the PrismaClient
+Run the first migration and On database fields changes
+npx prisma migrate dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
