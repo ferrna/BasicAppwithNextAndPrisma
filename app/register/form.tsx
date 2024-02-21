@@ -2,6 +2,7 @@
 import { unstable_noStore } from 'next/cache'
 import Link from 'next/link'
 import { FormEvent } from 'react'
+import { redirect } from 'next/navigation'
 
 export const RegisterForm = () => {
   unstable_noStore()
@@ -16,7 +17,7 @@ export const RegisterForm = () => {
       }),
     })
     console.log(response)
-    if (!response?.ok) {
+    if (response.statusText == 'Created') {
       alert('User registered successfully')
     }
   }

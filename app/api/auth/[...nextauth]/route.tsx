@@ -9,6 +9,9 @@ const adapter = PrismaAdapter(prisma)
 
 export const authOptions: NextAuthOptions = {
   adapter: adapter,
+  /* pages: {
+    signIn: '/api/auth/signin'
+  }, */
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
