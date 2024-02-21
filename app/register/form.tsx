@@ -1,24 +1,36 @@
 'use client'
-import { unstable_noStore } from 'next/cache'
 import Link from 'next/link'
-import { FormEvent } from 'react'
-import { redirect } from 'next/navigation'
+import { FormEvent, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export const RegisterForm = () => {
-  unstable_noStore()
+  const router = useRouter()
+  const [status, setStatus] = useState(false)
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
-    const response = await fetch('/api/register', {
-      method: 'POST',
-      body: JSON.stringify({
-        email: formData.get('email'),
-        password: formData.get('password'),
-      }),
-    })
-    console.log(response)
-    if (response.statusText == 'Created') {
-      alert('User registered successfully')
+    try {
+      setStatus(true)
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.get('email'),
+          password: formData.get('password'),
+        }),
+      })
+
+      if (response.status === 201) {
+        alert('User registered successfully')
+        router.push('/') // Redirect to the homepage
+      } else {
+        // Handle other response statuses (e.g., validation errors)
+      }
+    } catch (error) {
+      console.error('Error registering user:', error)
+      // Handle error
     }
   }
   return (
@@ -68,7 +80,7 @@ export const RegisterForm = () => {
               type="submit"
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              <Link href="/api/register">Register</Link>
+              {!status ? 'Register' : <span className="loading loading-spinner loading-sm"></span>}
             </button>
           </div>
         </form>
